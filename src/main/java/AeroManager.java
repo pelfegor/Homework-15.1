@@ -18,6 +18,7 @@ public class AeroManager {
 
     public Ticket[] searchBy(String from, String to) {
         Ticket[] result = new Ticket[0];
+
         for (Ticket ticket: repo.findAll()) {
             if (matches(ticket, from, to)) {
                 int copyToIndex = 0;

@@ -15,15 +15,16 @@ public class AeroTest {
 
     @BeforeEach
     public void setup() {
+
+    }
+
+    @Test
+    public void ShouldRemove() {
         manager.add(ticket1);
         manager.add(ticket2);
         manager.add(ticket3);
         manager.add(ticket4);
         manager.add(ticket5);
-    }
-
-    @Test
-    public void ShouldRemove() {
 
         repo.removeById(4);
 
@@ -36,6 +37,11 @@ public class AeroTest {
 
     @Test
     public void ShouldFindById() {
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
 
         Ticket expected = ticket5;
         Ticket actual = repo.findById(5);
@@ -44,9 +50,34 @@ public class AeroTest {
     }
 
     @Test
-    public void ShouldSearchByText() {
+    public void ShouldSearchByTextIfManyTickets() {
+        manager.add(ticket1);
+        manager.add(ticket2);
+        manager.add(ticket3);
+        manager.add(ticket4);
+        manager.add(ticket5);
 
         Ticket[] expected = {ticket3, ticket1, ticket5};
+        Ticket[] actual = manager.searchBy("Sheremetevo", "Yerevan");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ShouldSearchByTextIfOneTicket() {
+        manager.add(ticket1);
+
+
+        Ticket[] expected = {ticket1};
+        Ticket[] actual = manager.searchBy("Sheremetevo", "Yerevan");
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void ShouldSearchByTextIfNoTickets() {
+
+        Ticket[] expected = {};
         Ticket[] actual = manager.searchBy("Sheremetevo", "Yerevan");
 
         Assertions.assertArrayEquals(expected, actual);
